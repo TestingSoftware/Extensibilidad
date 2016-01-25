@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class Rest {
 
-	final private String NOMBRE_COLA_PRODUCTO = "PRODUCTO";
-	final private String NOMBRE_COLA_PEDIDO = "PEDIDO";
 	@Autowired
 	private ConectorActiveMQ conectorActiveMQ;
 
@@ -21,14 +19,14 @@ public class Rest {
 	public @ResponseBody void crearProducto(
 		@RequestBody String body) throws JMSException {
 		
-		conectorActiveMQ.enviarMensaje(NOMBRE_COLA_PRODUCTO, body);
+		conectorActiveMQ.enviarMensaje(ConectorActiveMQ.NOMBRE_COLA_PRODUCTO, body);
 	}
 	
 	@RequestMapping(value="/pedido",  method=RequestMethod.POST)
 	public @ResponseBody void crearPedido(
 			@RequestBody String body) throws JMSException {
 		
-		conectorActiveMQ.enviarMensaje(NOMBRE_COLA_PEDIDO, body);
+		conectorActiveMQ.enviarMensaje(ConectorActiveMQ.NOMBRE_COLA_PEDIDO, body);
 	
 	}
 
