@@ -9,8 +9,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
  
 	<context:component-scan base-package="com.ncubo.extensibilidad.server" />
  
-	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix">
 			<value>/WEB-INF/views/</value>
 		</property>
@@ -18,4 +17,9 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 			<value>.jsp</value>
 		</property>
 	</bean>
+	
+	<bean id="conectorActiveMQ" class="com.ncubo.extensibilidad.server.ConectorActiveMQ">
+		 <constructor-arg value="vm://localhost"/>
+	</bean>
+	
 </beans>
