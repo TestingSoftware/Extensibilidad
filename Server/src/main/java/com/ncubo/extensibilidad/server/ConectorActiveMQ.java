@@ -9,10 +9,11 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.log4j.Logger;
 
 public class ConectorActiveMQ 
 {
-	
+	private static final Logger logger = Logger.getLogger(ConectorActiveMQ.class);
 	private String cadenaConexion;
 	
 	public ConectorActiveMQ(String cadenaConexion)
@@ -35,6 +36,8 @@ public class ConectorActiveMQ
 
 		TextMessage message = session.createTextMessage(mensaje);
 		producer.send(message);
+		
+		logger.info(String.format("A la cola %s se envia %s.", cola, message));
 		
 		session.close();
 		connection.close();
