@@ -11,11 +11,16 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.log4j.Logger;
 
 public class ConectorActiveMQ 
 {
+
 	final protected static String NOMBRE_COLA_PRODUCTO = "PRODUCTO";
 	final protected static String NOMBRE_COLA_PEDIDO = "PEDIDO";
+
+	private static final Logger logger = Logger.getLogger(ConectorActiveMQ.class);
+
 	private String cadenaConexion;
 	
 	public ConectorActiveMQ(String cadenaConexion)
@@ -39,6 +44,8 @@ public class ConectorActiveMQ
 		TextMessage message = session.createTextMessage(mensaje);
 		producer.send(message);
 		
+		logger.info(String.format("A la cola %s se envia %s.", cola, message));
+		
 		session.close();
 		connection.close();
 
@@ -46,7 +53,7 @@ public class ConectorActiveMQ
 	
 	public void escucharProducto(final String topic) throws JMSException
 	{
-		Thread hilo = new Thread()
+		Thread escuchaThread = new Thread()
 				{
 			public void run()
 			{
@@ -81,7 +88,7 @@ public class ConectorActiveMQ
 				}
 			}
 				};
-				hilo.start();
+				escuchaThread.start();
 		
 	}
 
