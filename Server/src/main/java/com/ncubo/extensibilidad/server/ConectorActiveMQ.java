@@ -113,7 +113,7 @@ public class ConectorActiveMQ
 		Message message = consumer.receiveNoWait();
 		TextMessage textMessage = (TextMessage) message;
 		nuevo += textMessage.getText();
-		
+	
 		session.close();
 		connection.close();
 		return nuevo;
