@@ -9,14 +9,24 @@ import com.ncubo.extensibilidad.server.ConectorActiveMQ;
 
 
 public class ConectorActiveMQTest {
-
+	ConectorActiveMQ conectorActiveMQ = new ConectorActiveMQ("tcp://localhost:61616/");
 	@Test
-	public void prueba1() throws JMSException{
+	/*Envia y consume*/
+	public void prueba1() throws JMSException, InterruptedException{
 		final String TOPIC = "test";
-		ConectorActiveMQ conectorActiveMQ = new ConectorActiveMQ("tcp://localhost:61616/");
 		conectorActiveMQ.enviarMensaje(TOPIC, "Hola mundo");
-		Assert.assertEquals(conectorActiveMQ.hayNuevo(TOPIC), "Hola mundo1");
 		
+		Thread.sleep(1000);
+		
+		Assert.assertEquals(conectorActiveMQ.hayNuevo(TOPIC), "Hola mundo");
+		
+	}
+	
+	@Test
+	/*Retorna "" si no hay mensajes */
+	public void prueba2() throws JMSException{
+		final String TOPIC = "test";
+		Assert.assertEquals(conectorActiveMQ.hayNuevo(TOPIC), "");		
 	}
 
 }
