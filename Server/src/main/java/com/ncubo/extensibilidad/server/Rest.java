@@ -27,7 +27,18 @@ public class Rest {
 			@RequestBody String body) throws JMSException {
 		
 		conectorActiveMQ.enviarMensaje(ConectorActiveMQ.NOMBRE_COLA_PEDIDO, body);
+	}
 	
+	@RequestMapping(value="/pedido",  method=RequestMethod.GET)
+	public @ResponseBody String hayNuevoPedido() throws JMSException {
+		
+		return conectorActiveMQ.hayNuevo(ConectorActiveMQ.NOMBRE_COLA_PEDIDO);
+	}
+	
+	@RequestMapping(value="/producto",  method=RequestMethod.GET)
+	public @ResponseBody String hayNuevoProducto() throws JMSException {
+		
+		return 	conectorActiveMQ.hayNuevo(ConectorActiveMQ.NOMBRE_COLA_PRODUCTO).toString();
 	}
 
 	

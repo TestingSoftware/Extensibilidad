@@ -99,5 +99,24 @@ public class ConectorActiveMQ
 		escucharProducto(NOMBRE_COLA_PEDIDO);
 	}
 
-       
+	public String hayNuevo(String cola) throws JMSException
+	{
+		String nuevo = "";
+		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(cadenaConexion);
+		Connection connection = connectionFactory.createConnection();
+		connection.start();
+		
+		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+		Destination destination = session.createQueue(cola);
+		MessageConsumer consumer = session.createConsumer(destination);
+		
+		Message message = consumer.receiveNoWait();
+		TextMessage textMessage = (TextMessage) message;
+		nuevo += textMessage.getText();
+		
+		session.close();
+		connection.close();
+		return nuevo;
+	}
+
 }
