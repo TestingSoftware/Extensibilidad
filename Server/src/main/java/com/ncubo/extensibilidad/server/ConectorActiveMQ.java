@@ -69,19 +69,19 @@ public class ConectorActiveMQ
 				Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 		        Destination destination = session.createQueue(topic);
 		        MessageConsumer consumer = session.createConsumer(destination);
-
+		        String text = "";
 		        while(true)
 		        {
 		        	Message message = consumer.receive();
 		            if (message instanceof TextMessage) 
 		            {
 		                TextMessage textMessage = (TextMessage) message;
-		                String text = textMessage.getText();
-		                System.out.println("Received: " + text);
+		                text = textMessage.getText();
+		                logger.debug(String.format("Recibido el mensaje %s de la cola %s.", text, topic));
 		            } 
 		            else 
 		            {
-		                System.out.println("Received: " + message);
+		            	logger.debug(String.format("Recibido el mensaje %s de la cola %s.", text, topic));
 		            }
 		        }
 				} catch (JMSException e) {
