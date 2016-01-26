@@ -45,12 +45,40 @@ public class Nimbus {
 		conn.disconnect();
 	}
 	
-	public void hayNuevo(Producto producto){
-		
+	public void hayNuevo(Producto producto) throws IOException{
+		Gson jSonObject = new Gson();
+		hayNuevo(URL_PRODUCTO, jSonObject.toJson(producto));
 	}
 	
-	public void hayNuevo(Pedido pedido){
-		
+	public void hayNuevo(Pedido pedido) throws IOException{
+		Gson jSonObject = new Gson();
+		hayNuevo(URL_PEDIDO, jSonObject.toJson(pedido));
 	}
+	
+	private void hayNuevo(String urlP, String jSonObject) throws IOException{
+		URL url = new URL(urlP);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Accept", "application/json");
 
+		if (conn.getResponseCode() != 200) {
+			throw new RuntimeException("Failed : HTTP error code : "
+					+ conn.getResponseCode());
+		}
+		
+		OutputStream os = conn.getOutputStream();
+		os.write(jSonObject.getBytes());
+		os.flush();
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(
+			(conn.getInputStream())));
+
+		String output;
+		System.out.println("Resultado:  \n");
+		while ((output = br.readLine()) != null) {
+			System.out.println(output);
+		}
+
+		conn.disconnect();
+	}
 }
