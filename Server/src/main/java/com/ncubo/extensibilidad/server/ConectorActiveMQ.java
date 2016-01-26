@@ -95,8 +95,8 @@ public class ConectorActiveMQ
 
 	public void escuchar() throws JMSException
 	{
-		escucharProducto(NOMBRE_COLA_PRODUCTO);
-		escucharProducto(NOMBRE_COLA_PEDIDO);
+		/*escucharProducto(NOMBRE_COLA_PRODUCTO);
+		escucharProducto(NOMBRE_COLA_PEDIDO);*/
 	}
 
 	public String hayNuevo(String cola) throws JMSException
@@ -111,8 +111,10 @@ public class ConectorActiveMQ
 		MessageConsumer consumer = session.createConsumer(destination);
 		
 		Message message = consumer.receiveNoWait();
-		TextMessage textMessage = (TextMessage) message;
-		nuevo += textMessage.getText();
+		if(message != null){
+			TextMessage textMessage = (TextMessage) message;
+			nuevo = textMessage.getText();
+		}
 		
 		session.close();
 		connection.close();
