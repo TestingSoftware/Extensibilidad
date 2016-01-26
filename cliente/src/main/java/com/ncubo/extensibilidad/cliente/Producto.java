@@ -11,7 +11,7 @@ public class Producto {
 	private double precio;
 	private List<String> imagenes;
 	
-	private Producto(String codigo){
+	public Producto(String codigo){
 		this.codigo = codigo;
 	}
 	
