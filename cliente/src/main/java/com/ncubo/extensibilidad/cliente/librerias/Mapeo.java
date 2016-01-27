@@ -7,6 +7,21 @@ public class Mapeo
 	private String descSAP;
 	private String descNimbus;
 	
+	public String getIdSAP() {
+		return idSAP;
+	}
+
+	public String getIdNimbus() {
+		return idNimbus;
+	}
+
+	public String getDescSAP() {
+		return descSAP;
+	}
+
+	public String getDescNimbus() {
+		return descNimbus;
+	}
 	public Mapeo(String idSAP, String idNimbus, String descSAP, String descNimbus) 
 	{
 		super();
@@ -25,5 +40,4 @@ public class Mapeo
 	{
 		return new Mapeo(idSAP, null, descSAP, null);
 	}
-
 }
