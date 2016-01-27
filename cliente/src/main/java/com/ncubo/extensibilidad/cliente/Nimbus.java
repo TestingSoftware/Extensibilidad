@@ -64,11 +64,7 @@ public class Nimbus {
 		if (conn.getResponseCode() != 200) {
 			throw new RuntimeException("Failed : HTTP error code : "
 					+ conn.getResponseCode());
-		}
-		
-		OutputStream os = conn.getOutputStream();
-		os.write(jSonObject.getBytes());
-		os.flush();
+		}	
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(
 			(conn.getInputStream())));
