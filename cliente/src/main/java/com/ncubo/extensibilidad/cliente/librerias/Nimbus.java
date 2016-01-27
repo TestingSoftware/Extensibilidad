@@ -1,4 +1,4 @@
-package com.ncubo.extensibilidad.cliente;
+package com.ncubo.extensibilidad.cliente.librerias;
 
 import java.io.BufferedReader;
 import java.io.IOException;

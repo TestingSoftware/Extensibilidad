@@ -110,7 +110,7 @@ public class ConectorActiveMQ
 		Destination destination = session.createQueue(cola);
 		MessageConsumer consumer = session.createConsumer(destination);
 		
-		Message message = consumer.receiveNoWait();
+		Message message = consumer.receive(1000);
 		if(message != null){
 			TextMessage textMessage = (TextMessage) message;
 			nuevo = textMessage.getText();

@@ -9,7 +9,7 @@ import com.ncubo.extensibilidad.server.ConectorActiveMQ;
 
 
 public class ConectorActiveMQTest {
-	ConectorActiveMQ conectorActiveMQ = new ConectorActiveMQ("tcp://localhost:61616/");
+	ConectorActiveMQ conectorActiveMQ = new ConectorActiveMQ("tcp://activemq:61616/");
 	@Test
 	/*Envia y consume*/
 	public void prueba1() throws JMSException, InterruptedException{
