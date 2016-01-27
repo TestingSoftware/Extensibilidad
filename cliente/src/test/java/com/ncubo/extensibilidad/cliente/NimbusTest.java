@@ -23,4 +23,19 @@ public class NimbusTest {
 		Assert.assertEquals(producto, producto);
 		
 	}
+	
+	@Test
+	public void hayNuevo() throws IOException{
+		Producto producto = new Producto("1");
+		Gson gson = new Gson();
+		producto.setNombre("c");
+		producto.setCantidad(1);
+		producto.setDescripcion("des");
+		producto.setPrecio(3);
+		
+		Nimbus nimbus = new Nimbus();
+		nimbus.hayNuevo(producto);
+		
+		Assert.assertEquals(producto, producto);
+	}
 }

@@ -46,16 +46,15 @@ public class Nimbus {
 	}
 	
 	public void hayNuevo(Producto producto) throws IOException{
-		Gson jSonObject = new Gson();
-		hayNuevo(URL_PRODUCTO, jSonObject.toJson(producto));
+		hayNuevo(URL_PRODUCTO);
 	}
 	
 	public void hayNuevo(Pedido pedido) throws IOException{
-		Gson jSonObject = new Gson();
-		hayNuevo(URL_PEDIDO, jSonObject.toJson(pedido));
+
+		hayNuevo(URL_PEDIDO);
 	}
 	
-	private void hayNuevo(String urlP, String jSonObject) throws IOException{
+	private void hayNuevo(String urlP) throws IOException{
 		URL url = new URL(urlP);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
