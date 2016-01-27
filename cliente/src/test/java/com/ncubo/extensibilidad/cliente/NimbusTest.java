@@ -1,6 +1,8 @@
 package com.ncubo.extensibilidad.cliente;
 
 import com.google.gson.Gson;
+import com.ncubo.extensibilidad.cliente.librerias.Nimbus;
+import com.ncubo.extensibilidad.cliente.librerias.Producto;
 
 import java.io.IOException;
 
