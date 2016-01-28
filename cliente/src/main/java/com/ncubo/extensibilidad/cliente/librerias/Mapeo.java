@@ -1,5 +1,7 @@
 package com.ncubo.extensibilidad.cliente.librerias;
 
+import com.google.gson.Gson;
+
 public class Mapeo 
 {
 	private String idSAP;
@@ -22,7 +24,7 @@ public class Mapeo
 	public String getDescNimbus() {
 		return descNimbus;
 	}
-	public Mapeo(String idSAP, String idNimbus, String descSAP, String descNimbus) 
+	public Mapeo(String idSAP, String descSAP, String idNimbus, String descNimbus) 
 	{
 		super();
 		this.idSAP = idSAP;
@@ -33,11 +35,18 @@ public class Mapeo
 	
 	public static Mapeo nimbus(String idNimbus, String descNimbus)
 	{
-		return new Mapeo(null, idNimbus, null, descNimbus);
+		return new Mapeo(null, null, idNimbus, descNimbus);
 	}
 
 	public static Mapeo erp(String idSAP, String descSAP)
 	{
-		return new Mapeo(idSAP, null, descSAP, null);
+		return new Mapeo(idSAP, descSAP, null, null);
 	}
+
+	@Override
+	public String toString() {
+		return  new Gson().toJson(this);
+	}
+	
+	
 }
