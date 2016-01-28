@@ -1,4 +1,4 @@
-package com.ncubo.extensibilidad.dao;
+package com.ncubo.extensibilidad.cliente.dao;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;

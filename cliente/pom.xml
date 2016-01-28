@@ -62,6 +62,23 @@
 			<artifactId>commons-csv</artifactId>
 			<version>1.1</version>
 		</dependency>
+		<!-- ActiveMQ Artifacts -->
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-spring</artifactId>
+			<version>5.13.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-kahadb-store</artifactId>
+			<version>5.13.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>1.1</version>
+		</dependency>
 	</dependencies>
   
 </project>

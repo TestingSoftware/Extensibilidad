@@ -10,7 +10,10 @@ public class Configuracion
 {
 	private Properties prop = new Properties();
 	public enum key {
-		URL_NIMBUS("nimbus.url");
+		URL_NIMBUS("nimbus.url"),
+		CONEXION_COLA("conexion.cola"),
+		EXISTENCIAS_COLA("existencias.cola"),
+		PATH_EXISTENCIAS("existencias.path");
 		
 		private String nombre;
 		key(String nombre)
@@ -46,5 +49,20 @@ public class Configuracion
 	public String urlNimbus()
 	{
 		return prop.getProperty(key.URL_NIMBUS.toString());
+	}
+	
+	public String pathExistencias()
+	{
+		return prop.getProperty(key.PATH_EXISTENCIAS.toString());
+	}
+	
+	public String conexionCola()
+	{
+		return prop.getProperty(key.CONEXION_COLA.toString());
+	}
+	
+	public String colaExistencias()
+	{
+		return prop.getProperty(key.EXISTENCIAS_COLA.toString());
 	}
 }

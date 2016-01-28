@@ -2,6 +2,8 @@ package com.ncubo.extensibilidad.cliente.librerias;
 
 import java.util.List;
 
+import com.google.gson.Gson;
+
 public class Producto {
 	
 	private String codigo;
@@ -55,6 +57,19 @@ public class Producto {
 	public void setImagenes(List<String> imagenes)
 	{
 		this.imagenes = imagenes;
+	}
+	public String getDescripcion() 
+	{
+		return descripcion;
+	}
+	public void setCodigo(String codigo) 
+	{
+		this.codigo = codigo;
+	}
+	@Override
+	public String toString() 
+	{
+		return new Gson().toJson(this);
 	}
 
 }
