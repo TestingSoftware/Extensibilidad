@@ -1,41 +1,66 @@
 package com.ncubo.extensibilidad.cliente.csv;
 
-import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.ncubo.extensibilidad.cliente.librerias.Configuracion;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+
 import com.ncubo.extensibilidad.cliente.librerias.Producto;
 
 public class ProductoCSV {
 	
-	private String csvPath;
+	private String pathArchivo;
 	
-	public ProductoCSV(String csvPath){
-		this.csvPath = csvPath;
+	private enum Columna 
+	{
+		CODIGO (),
+		NOMBRE (),
+		CANTIDAD ();
 	}
 	
-	public LinkedList<Producto> ObtenerProductos() throws NumberFormatException, IOException
+	private final String [] CABECERAS = {Columna.CODIGO.name() 
+			,Columna.NOMBRE.name()
+			,Columna.CANTIDAD.name()};
+	
+	public ProductoCSV(String pathArchivo)
 	{
-		LinkedList<Producto> productos = new LinkedList<Producto>();
-		BufferedReader br = null;
-		String line = "";
-		String cvsSplitBy = ",";
-		
-		br = new BufferedReader(new FileReader(csvPath));
-		line = br.readLine();
-		while ((line = br.readLine()) != null)
+		this.pathArchivo = pathArchivo;
+	}
+	
+	public List<Producto> obtener() throws NumberFormatException, IOException
+	{
+		File file = new File(pathArchivo);
+		if( !file.exists() )
 		{
-			String[] productoString = line.split(cvsSplitBy);
-			Producto producto = new Producto(productoString[0]);
-			producto.setNombre(productoString[1]);
-			producto.setCantidad(Integer.parseInt(productoString[2]));
+			throw new RuntimeException("El archivo no existe.");
+		}
+		
+		FileReader fileReader = null;
+		CSVParser csvFileParser = null;
+		CSVFormat csvFileFormat = CSVFormat.DEFAULT.withHeader(CABECERAS);
+
+		List<Producto> productos = new ArrayList<Producto>();
+		fileReader = new FileReader(file);
+		csvFileParser = new CSVParser(fileReader, csvFileFormat);
+		
+		List<CSVRecord> csvRecords = csvFileParser.getRecords(); 
+		for ( int i = 1 ; i < csvRecords.size() ; i++ )
+		{
+			CSVRecord record = csvRecords.get(i);
+			Producto producto = new Producto(record.get(Columna.CODIGO.name()));
+			producto.setNombre(record.get(Columna.NOMBRE.name()));
+			producto.setCantidad(Integer.parseInt(record.get(Columna.CANTIDAD.name())));
 			
 			productos.add(producto);
 		}
 		
-		br.close();
+		fileReader.close();
+		csvFileParser.close();
 		return productos;
 	}
 

@@ -49,53 +49,6 @@ public class ConectorActiveMQ
 		connection.close();
 
 	}
-	
-	public void escucharProducto(final String topic) throws JMSException
-	{
-		Thread escuchaThread = new Thread()
-				{
-			public void run()
-			{
-				ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(cadenaConexion);
-				 
-				Connection connection;
-				try {
-					connection = connectionFactory.createConnection();
-				
-				connection.start();
-
-				Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-		        Destination destination = session.createQueue(topic);
-		        MessageConsumer consumer = session.createConsumer(destination);
-		        String text = "";
-		        while(true)
-		        {
-		        	Message message = consumer.receive();
-		            if (message instanceof TextMessage) 
-		            {
-		                TextMessage textMessage = (TextMessage) message;
-		                text = textMessage.getText();
-		                logger.debug(String.format("Recibido el mensaje %s de la cola %s.", text, topic));
-		            } 
-		            else 
-		            {
-		            	logger.debug(String.format("Recibido el mensaje %s de la cola %s.", text, topic));
-		            }
-		        }
-				} catch (JMSException e) {
-					throw new RuntimeException(e);
-				}
-			}
-				};
-				escuchaThread.start();
-		
-	}
-
-	public void escuchar() throws JMSException
-	{
-		/*escucharProducto(NOMBRE_COLA_PRODUCTO);
-		escucharProducto(NOMBRE_COLA_PEDIDO);*/
-	}
 
 	public String hayNuevo(String cola) throws JMSException
 	{

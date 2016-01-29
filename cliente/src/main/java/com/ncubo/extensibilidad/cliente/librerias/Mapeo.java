@@ -4,32 +4,32 @@ import com.google.gson.Gson;
 
 public class Mapeo 
 {
-	private String idSAP;
+	private String idERP;
 	private String idNimbus;
-	private String descSAP;
+	private String descERP;
 	private String descNimbus;
 	
-	public String getIdSAP() {
-		return idSAP;
+	public String getIdERP() {
+		return idERP;
 	}
 
 	public String getIdNimbus() {
 		return idNimbus;
 	}
 
-	public String getDescSAP() {
-		return descSAP;
+	public String getDescERP() {
+		return descERP;
 	}
 
 	public String getDescNimbus() {
 		return descNimbus;
 	}
-	public Mapeo(String idSAP, String descSAP, String idNimbus, String descNimbus) 
+	public Mapeo(String idERP, String descERP, String idNimbus, String descNimbus) 
 	{
 		super();
-		this.idSAP = idSAP;
+		this.idERP = idERP;
 		this.idNimbus = idNimbus;
-		this.descSAP = descSAP;
+		this.descERP = descERP;
 		this.descNimbus = descNimbus;
 	}
 	

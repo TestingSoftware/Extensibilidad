@@ -4,26 +4,38 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import com.mysql.jdbc.Connection;
 import com.ncubo.extensibilidad.cliente.librerias.Mapeo;
 
 public class MapeoDao 
 {
+	private final String TABLA = "mapeo";
+	
+	private enum Columna 
+	{
+		id_erp (),
+		descripcion_erp (),
+		id_nimbus (),
+		descripcion_nimbus ();
+	}
 	
 	public void insertar(Mapeo mapeo) throws SQLException, ClassNotFoundException
 	{
-		String queryDatos = "'" + mapeo.getIdSAP() + "'"
-							+"," + "'" + mapeo.getIdNimbus( )+ "'"
-							+"," + "'" + mapeo.getDescSAP() + "'"
-							+"," + "'" + mapeo.getDescNimbus() + "'";
-		String query = "INSERT INTO mapeo "
-					 + "(id_erp, "
-					 + "id_nimbus, "
-					 + "descripcion_erp, "
-					 + "descripcion_nimbus) "
-					 + "VALUES ("+queryDatos+");";
+		String query = String.format("INSERT INTO %s (%s, %s, %s, %s) "
+					 + "VALUES ('%s', '%s', '%s', '%s');"
+					 ,TABLA
+					 ,Columna.id_erp.name()
+					 ,Columna.id_nimbus.name()
+					 ,Columna.descripcion_erp.name()
+					 ,Columna.descripcion_nimbus.name()
+					 ,mapeo.getIdERP()
+					 ,mapeo.getIdNimbus()
+					 ,mapeo.getDescERP()
+					 ,mapeo.getDescNimbus());
 
 		Persistencia dao = new Persistencia();
 		Connection con = dao.openConBD();
@@ -32,10 +44,13 @@ public class MapeoDao
 		dao.closeConBD();
 	}
 	
-	public LinkedList<Mapeo> ObtenerMapeosAmbosLados() throws ClassNotFoundException, SQLException
+	public List<Mapeo> obtenerMapeosAmbosLados() throws ClassNotFoundException, SQLException
 	{
-		LinkedList<Mapeo> mapeados = new LinkedList<Mapeo>();
-		String query = "SELECT * FROM mapeo WHERE id_erp is not null and id_nimbus is not null";
+		List<Mapeo> mapeados = new ArrayList<Mapeo>();
+		String query = String.format("SELECT %s, %s, %s, %s "
+				+ " FROM %s WHERE id_erp is not null and id_nimbus is not null;" 
+				,Columna.id_erp.name(), Columna.descripcion_erp.name(), Columna.id_nimbus.name(), Columna.descripcion_nimbus.name()
+				, TABLA);
 		
 		Persistencia dao = new Persistencia();
 		Connection con = dao.openConBD();
@@ -45,10 +60,10 @@ public class MapeoDao
 		while (rs.next())
 		{
 			mapeados.add(new Mapeo(
-					rs.getString("id_erp"),
-					rs.getString("id_nimbus"),
-					rs.getString("descripcion_erp"),
-					rs.getString("descripcion_nimbus")
+					rs.getString(Columna.id_erp.name()),
+					rs.getString(Columna.descripcion_erp.name()),
+					rs.getString(Columna.id_nimbus.name()),
+					rs.getString(Columna.descripcion_nimbus.name())
 					));
 		}
 		
@@ -56,28 +71,36 @@ public class MapeoDao
 		return mapeados;
 	}
 	
-	public LinkedList<Mapeo> ObtenerMapeos() throws IOException,SQLException, ClassNotFoundException
+	public List<Mapeo> obtener() throws IOException,SQLException, ClassNotFoundException
 	{
-		String query = "SELECT * From mapeo;";
+		String query = String.format("SELECT %s, %s, %s, %s FROM %s" 
+				,Columna.id_erp.name(), Columna.descripcion_erp.name(), Columna.id_nimbus.name(), Columna.descripcion_nimbus.name()
+				, TABLA);
 		Persistencia persistencia = new Persistencia();
 		Connection conn = persistencia.openConBD();
 		ResultSet result;
 		Statement estado = conn.createStatement();
 		result = estado.executeQuery(query);
 		
-		LinkedList<Mapeo> rsList = new LinkedList<Mapeo>();
+		List<Mapeo> rsList = new ArrayList<Mapeo>();
 		while(result.next())
 		{
-			Mapeo mapeo = new Mapeo(result.getString(1), result.getString(4),
-							result.getString(2), result.getString(3));
+			Mapeo mapeo = null;
 			
-			if(mapeo.getIdSAP() != null && mapeo.getIdNimbus() == null)
+			if(result.getString(Columna.id_erp.name()) != null && result.getString(Columna.id_nimbus.name()) == null)
 			{
-				mapeo = Mapeo.erp(mapeo.getIdSAP(), mapeo.getDescSAP());
+				mapeo = Mapeo.erp(result.getString(Columna.id_erp.name()), result.getString(Columna.descripcion_erp.name()));
 			}
-			if(mapeo.getIdSAP() == null && mapeo.getIdNimbus() != null)
+			else if(result.getString(Columna.id_erp.name()) == null && result.getString(Columna.id_nimbus.name()) != null)
 			{
-				mapeo = Mapeo.nimbus(mapeo.getIdNimbus(), mapeo.getDescNimbus());
+				mapeo = Mapeo.nimbus(result.getString(Columna.id_nimbus.name()), result.getString(Columna.descripcion_nimbus.name()));
+			}
+			else
+			{
+				mapeo = new Mapeo(result.getString(Columna.id_erp.name()),
+						result.getString(Columna.descripcion_erp.name()),
+						result.getString(Columna.id_nimbus.name()),
+						result.getString(Columna.descripcion_nimbus.name()));
 			}
 			
 			rsList.add(mapeo);
@@ -87,7 +110,7 @@ public class MapeoDao
 		return rsList;
 	}
 
-	public void InsertarMapeos(LinkedList<Mapeo> mapeos) throws SQLException, ClassNotFoundException
+	public void insertar(List<Mapeo> mapeos) throws SQLException, ClassNotFoundException
 	{
 		Persistencia dao = new Persistencia();
 		Connection con = dao.openConBD();
@@ -96,21 +119,21 @@ public class MapeoDao
 		
 		try
 		{
-			String query = "DELETE FROM mapeo;";
+			String query = String.format("DELETE FROM %s;", TABLA);
 			ejecutor.execute(query);
 			for (Mapeo mapeoActual : mapeos) 
 			{
-
-				String queryDatos = (mapeoActual.getIdSAP() != null ?"'" + mapeoActual.getIdSAP() + "'" : "null")
-						+"," + (mapeoActual.getIdNimbus( ) != null ?"'" + mapeoActual.getIdNimbus() + "'" : "null")
-						+"," + (mapeoActual.getDescSAP()  != null ?"'" + mapeoActual.getDescSAP() + "'" : "null")
-						+"," + (mapeoActual.getDescNimbus()  != null ?"'" + mapeoActual.getDescNimbus() + "'" : "null");
-				query = "INSERT INTO mapeo "
-						 + "(id_erp, "
-						 + "id_nimbus, "
-						 + "descripcion_erp, "
-						 + "descripcion_nimbus) "
-						 + "VALUES ("+queryDatos+");";
+				query = String.format("INSERT INTO %s (%s, %s, %s, %s) "
+						+ "VALUES (%s, %s, %s, %s);"
+						, TABLA
+						, Columna.id_erp.name()
+						, Columna.id_nimbus.name()
+						, Columna.descripcion_erp.name()
+						, Columna.descripcion_nimbus.name()
+						, (mapeoActual.getIdERP() != null ?"'" + mapeoActual.getIdERP() + "'" : "null")
+						, (mapeoActual.getIdNimbus( ) != null ?"'" + mapeoActual.getIdNimbus() + "'" : "null")
+						, (mapeoActual.getDescERP()  != null ?"'" + mapeoActual.getDescERP() + "'" : "null")
+						, (mapeoActual.getDescNimbus()  != null ?"'" + mapeoActual.getDescNimbus() + "'" : "null"));
 				ejecutor.execute(query);
 			}
 			con.commit();

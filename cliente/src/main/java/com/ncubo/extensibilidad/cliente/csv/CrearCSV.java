@@ -28,9 +28,9 @@ public class CrearCSV {
 		for(Mapeo elemento: rsList)
 		{
 			List<String> camposCsv = new ArrayList<String>();
-			camposCsv.add(elemento.getIdSAP());
+			camposCsv.add(elemento.getIdERP());
 			camposCsv.add(elemento.getIdNimbus());
-			camposCsv.add(elemento.getDescSAP());
+			camposCsv.add(elemento.getDescERP());
 			camposCsv.add(elemento.getDescNimbus());
 			csvPrinter.printRecord(camposCsv); 
 		}
