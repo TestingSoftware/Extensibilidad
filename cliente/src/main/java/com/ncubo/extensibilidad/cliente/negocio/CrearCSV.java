@@ -7,8 +7,8 @@ import com.ncubo.extensibilidad.cliente.dao.MapeoDao;
 public class CrearCSV {
 	public void creaCsv() throws IOException, ClassNotFoundException, SQLException{
 		MapeoDao csvMapeo = new MapeoDao();
-		com.ncubo.extensibilidad.cliente.csv.CrearCSV crearCsv;
-		crearCsv = new com.ncubo.extensibilidad.cliente.csv.CrearCSV();
-		crearCsv.crearCSV(csvMapeo.ObtenerMapeos());
+		com.ncubo.extensibilidad.cliente.csv.MapeoCSV crearCsv;
+		crearCsv = new com.ncubo.extensibilidad.cliente.csv.MapeoCSV();
+		crearCsv.crear(csvMapeo.ObtenerMapeos());
 	}
 }
