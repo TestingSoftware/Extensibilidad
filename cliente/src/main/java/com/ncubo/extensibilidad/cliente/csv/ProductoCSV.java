@@ -24,6 +24,7 @@ public class ProductoCSV {
 		String cvsSplitBy = ",";
 		
 		br = new BufferedReader(new FileReader(csvPath));
+		line = br.readLine();
 		while ((line = br.readLine()) != null)
 		{
 			String[] productoString = line.split(cvsSplitBy);
