@@ -12,6 +12,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 
+import com.ncubo.extensibilidad.cliente.librerias.Configuracion;
 import com.ncubo.extensibilidad.cliente.librerias.Mapeo;
 
 public class MapeoCSV {
@@ -22,7 +23,6 @@ public class MapeoCSV {
 	private static final String DESC_P_NIMBUS = "Desc P Nimbus";
 	private final String [] CABECERAS1 = {ID_ERP,ID_NIMBUS,DESC_P_ERP,};
 	
-	private static final String PATH_VOLCADO_DB = "src/main/resources/volcadoDB.csv";
 	private final String SALTO_LINEA = "\n";
 	private final Object [] CABECERAS = {"ID ERP","ID NIMBUS","Desc P ERP","Desc P Nimbus"};
 	
@@ -39,7 +39,7 @@ public class MapeoCSV {
 		CSVPrinter csvPrinter = null;
 		
 		CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator(SALTO_LINEA);
-		escritorArchivo = new FileWriter(PATH_VOLCADO_DB);
+		escritorArchivo = new FileWriter(new Configuracion().pathVolcadoDb());
 		csvPrinter = new CSVPrinter(escritorArchivo, csvFileFormat);
 		csvPrinter.printRecord(CABECERAS);
 		
@@ -48,8 +48,8 @@ public class MapeoCSV {
 			List<String> camposCsv = new ArrayList<String>();
 			camposCsv.add(elemento.getIdSAP());
 			camposCsv.add(elemento.getIdNimbus());
-			camposCsv.add(elemento.getDescSAP());
 			camposCsv.add(elemento.getDescNimbus());
+			camposCsv.add(elemento.getDescSAP());
 			csvPrinter.printRecord(camposCsv); 
 		}
 	

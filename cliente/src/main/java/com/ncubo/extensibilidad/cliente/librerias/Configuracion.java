@@ -13,7 +13,8 @@ public class Configuracion
 		URL_NIMBUS("nimbus.url"),
 		CONEXION_COLA("conexion.cola"),
 		EXISTENCIAS_COLA("existencias.cola"),
-		PATH_EXISTENCIAS("existencias.path");
+		PATH_EXISTENCIAS("existencias.path"),
+		PATH_VOLCADO_DB("volcado.db");
 		
 		private String nombre;
 		key(String nombre)
@@ -65,4 +66,9 @@ public class Configuracion
 	{
 		return prop.getProperty(key.EXISTENCIAS_COLA.toString());
 	}
+	
+	public String pathVolcadoDb(){
+		return prop.getProperty(key.PATH_VOLCADO_DB.toString());
+	}
+	
 }

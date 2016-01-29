@@ -9,36 +9,50 @@ import java.sql.SQLException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.ncubo.extensibilidad.cliente.negocio.CrearCSV;
+import com.ncubo.extensibilidad.cliente.librerias.Configuracion;
+import com.ncubo.extensibilidad.cliente.main.GenerarMapeos;
 
 
 public class CsvMapeo
 {
-	private static final File FILE_PATH = new File("src/main/resources/volcadoDB.csv");
-
+	@Test
+	public void archivo() throws ClassNotFoundException, IOException, SQLException
+	{
+		final String PATH_VOLCADO = "src/test/resources/volcadoDB.csv";
+		GenerarMapeos generarMapeos = new GenerarMapeos();
+		generarMapeos.generar();
+		File file = new File(PATH_VOLCADO);
+		Assert.assertTrue(file.exists());
+	
+	}
+	
 	@Test
 	public void mapeo() throws IOException, ClassNotFoundException, SQLException
-	{
-		//TODO AQUI LLAMAR UN SQL QUE CARGUE LOS DATOS
-		CrearCSV crearCsv = new CrearCSV();
-		crearCsv.creaCsv();
-		String lineaActual;
-		String outPutText = "";
-		BufferedReader br = new BufferedReader(new FileReader(FILE_PATH));
+	{	String lineaActual;
+		String textoDeArchivo = "";
+		final String PATH_VOLCADO = "src/test/resources/volcadoDB.csv";
+		final File archivo = new File(PATH_VOLCADO);
 		
-		while((lineaActual = br.readLine()) != null)
-			outPutText += lineaActual+ " ";
-		outPutText = outPutText.replace(',', ' ');
-		String [] expectedText = {"ID ERP","ID NIMBUS","Desc P ERP","Desc P Nimbus"
-				,"1","1","1","1"
-				,"1","1","1","1"
-				,"2","2","2","2"
-				,"3","3","3","3"};
-		String texto = "";
-		for(String elemento : expectedText)
-		texto +=  elemento + " ";
+		GenerarMapeos generarMapeos = new GenerarMapeos();
+		generarMapeos.generar();
+
+		// Abre el archivo para leer su contenido y lo escribe en una variable
+		BufferedReader lector = new BufferedReader(new FileReader(archivo));
+		while((lineaActual = lector.readLine()) != null)
+			textoDeArchivo += lineaActual + " ";
+		lector.close();
+		textoDeArchivo = textoDeArchivo.replace(',', ' ');
 		
-		br.close();
-		Assert.assertEquals(outPutText, texto);
+		// Texto conocido: sé existe en la BD
+		String [] arrayTextoEsperado = {
+				"ID ERP","ID NIMBUS","Desc P ERP","Desc P Nimbus"
+				,"1", "escoba", "producto1", "escoba"};
+		// Agrega un espacio, puesto que en la cadena esperada fueron sustituidas las comas por espacios
+		String textoEsperado = "";
+		for(String caracter : arrayTextoEsperado)
+			textoEsperado += caracter + " ";
+		
+		Assert.assertEquals(textoDeArchivo, textoEsperado);
 	}
+
 }
