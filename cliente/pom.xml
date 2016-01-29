@@ -110,6 +110,7 @@ because we want to be to able to execute mvn sonar:sonar without passing a profi
 		</dependency>
 	</dependencies>
   <!-- coverage -->
+  <profiles>
 <profile>
     <id>coverage</id>
     <build>
@@ -223,4 +224,5 @@ because we want to be to able to execute mvn sonar:sonar without passing a profi
         </plugins>
     </build>
 </profile>
+</profiles>
 </project>
