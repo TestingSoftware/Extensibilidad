@@ -8,4 +8,5 @@
 	<modules>
 		<module>Server</module>
 		<module>cliente</module>
+	</modules>
 </project>
