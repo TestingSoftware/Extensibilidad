@@ -13,7 +13,7 @@ public class ProcesarArchivoDeMapeos {
 
 	public static void main(String[] args) throws NumberFormatException, IOException, ClassNotFoundException, SQLException, JMSException 
 	{
-		new ProcesarArchivoDeMapeos().Luncher(new Configuracion().pathVolcado());
+		new ProcesarArchivoDeMapeos().Luncher(new Configuracion().pathVolcadoDb());
 	}
 	
 	public void Luncher(String path) throws ClassNotFoundException, SQLException, IOException

@@ -14,7 +14,7 @@ public class Launcher {
 		System.out.println( new Configuracion().urlNimbus() );
 		MapeoDao csvMapeo = new MapeoDao();
 		MapeoCSV crearCsv = new MapeoCSV();
-		crearCsv.crear(csvMapeo.ObtenerMapeos());
+		crearCsv.crear(csvMapeo.obtener());
 	}
 	
 }

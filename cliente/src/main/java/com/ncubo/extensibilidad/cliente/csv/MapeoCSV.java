@@ -1,10 +1,10 @@
 package com.ncubo.extensibilidad.cliente.csv;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
@@ -16,40 +16,48 @@ import com.ncubo.extensibilidad.cliente.librerias.Configuracion;
 import com.ncubo.extensibilidad.cliente.librerias.Mapeo;
 
 public class MapeoCSV {
+
 	private String pathArchivo;
-	private static final String ID_ERP = "ID ERP";
-	private static final String ID_NIMBUS = "ID NIMBUS";
-	private static final String DESC_P_ERP = "Desc P ERP";
-	private static final String DESC_P_NIMBUS = "Desc P Nimbus";
-	private final String [] CABECERAS1 = {ID_ERP,ID_NIMBUS,DESC_P_ERP,};
 	
-	private final String SALTO_LINEA = "\n";
-	private final Object [] CABECERAS = {"ID ERP","ID NIMBUS","Desc P ERP","Desc P Nimbus"};
+	private enum Columna 
+	{
+		ID_ERP (),
+		DESC_P_ERP (),
+		ID_NIMBUS (),
+		DESC_P_NIMBUS ();
+	}
 	
-	public MapeoCSV(String pathArchivo){
+	private final String [] CABECERAS = {Columna.ID_ERP.name() 
+			,Columna.DESC_P_ERP.name()
+			,Columna.ID_NIMBUS.name()
+			,Columna.DESC_P_NIMBUS.name()};
+	
+	public MapeoCSV(String pathArchivo)
+	{
 		this.pathArchivo = pathArchivo;
 	}
 	
-	public  MapeoCSV(){
+	public MapeoCSV()
+	{
 		
 	}
-	public void crear(LinkedList<Mapeo> rsList) throws IOException 
+	public void crear(List<Mapeo> list) throws IOException 
 	{
 		FileWriter escritorArchivo = null;
 		CSVPrinter csvPrinter = null;
 		
-		CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator(SALTO_LINEA);
-		escritorArchivo = new FileWriter(new Configuracion().pathVolcadoDb());
+		CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator("\n");
+		escritorArchivo = new FileWriter("src/main/resources/volcadoDB.csv");
 		csvPrinter = new CSVPrinter(escritorArchivo, csvFileFormat);
 		csvPrinter.printRecord(CABECERAS);
 		
-		for(Mapeo elemento: rsList)
+		for(Mapeo elemento: list)
 		{
 			List<String> camposCsv = new ArrayList<String>();
-			camposCsv.add(elemento.getIdSAP());
+			camposCsv.add(elemento.getIdERP());
 			camposCsv.add(elemento.getIdNimbus());
 			camposCsv.add(elemento.getDescNimbus());
-			camposCsv.add(elemento.getDescSAP());
+			camposCsv.add(elemento.getDescERP());
 			csvPrinter.printRecord(camposCsv); 
 		}
 	
@@ -59,31 +67,42 @@ public class MapeoCSV {
 	}
 	
 	
-	
-	public LinkedList<Mapeo> ObtenerMapeos() throws IOException
+	public List<Mapeo> obtener() throws IOException
 	{
+		File file = new File(pathArchivo);
+		if( !file.exists() )
+		{
+			throw new RuntimeException("El archivo no existe.");
+		}
+		
 		FileReader fileReader = null;
 		CSVParser csvFileParser = null;
-		CSVFormat csvFileFormat = CSVFormat.DEFAULT.withHeader(CABECERAS1);
+		CSVFormat csvFileFormat = CSVFormat.DEFAULT.withHeader(CABECERAS);
 
-		LinkedList<Mapeo> mapeos = new LinkedList<Mapeo>();
-		fileReader = new FileReader(pathArchivo);
+		List<Mapeo> mapeos = new ArrayList<Mapeo>();
+		fileReader = new FileReader(file);
 		csvFileParser = new CSVParser(fileReader, csvFileFormat);
 		
 		List<CSVRecord> csvRecords = csvFileParser.getRecords(); 
-		for (int i = 1; i < csvRecords.size(); i++)
+		for ( int i = 1 ; i < csvRecords.size() ; i++ )
 		{
 			CSVRecord record = csvRecords.get(i);
-			Mapeo mapeo = new Mapeo(record.get(0), record.get(1), 
-					record.get(DESC_P_ERP), record.get(3));
+			Mapeo mapeo = null;
 			
-			if(!mapeo.getIdSAP().equals("") && mapeo.getIdNimbus().equals(""))
+			if( !record.get(Columna.ID_ERP.name()).equals("") && record.get(Columna.ID_NIMBUS.name()).equals("") )
 			{
-				mapeo = Mapeo.erp(mapeo.getIdSAP(), mapeo.getDescSAP());
+				mapeo = Mapeo.erp(record.get(Columna.ID_ERP.name()), record.get(Columna.DESC_P_ERP.name()));
 			}
-			if(mapeo.getIdSAP().equals("") && !mapeo.getIdNimbus().equals(""))
+			else if( record.get(Columna.ID_ERP.name()).equals("") && !record.get(Columna.ID_NIMBUS.name()).equals("") )
 			{
-				mapeo = Mapeo.nimbus(mapeo.getIdNimbus(), mapeo.getDescNimbus());
+				mapeo = Mapeo.nimbus(record.get(Columna.ID_NIMBUS.name()), record.get(Columna.DESC_P_NIMBUS.name()));
+			}
+			else 
+			{
+				mapeo = new Mapeo(record.get(Columna.ID_ERP.name())
+						, record.get(Columna.DESC_P_ERP.name())
+						, record.get(Columna.ID_NIMBUS.name())
+						, record.get(Columna.DESC_P_NIMBUS.name()));
 			}
 			
 			mapeos.add(mapeo);
@@ -93,4 +112,5 @@ public class MapeoCSV {
 		csvFileParser.close();
 		return mapeos;
 	}
+	
 }

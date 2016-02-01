@@ -10,6 +10,6 @@ public class CrearCSV {
 		MapeoDao csvMapeo = new MapeoDao();
 		com.ncubo.extensibilidad.cliente.csv.MapeoCSV crearCsv;
 		crearCsv = new com.ncubo.extensibilidad.cliente.csv.MapeoCSV();
-		crearCsv.crear(csvMapeo.ObtenerMapeos());
+		crearCsv.crear(csvMapeo.obtener());
 	}
 }
