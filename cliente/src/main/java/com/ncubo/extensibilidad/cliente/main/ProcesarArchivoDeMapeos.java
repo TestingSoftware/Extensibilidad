@@ -13,13 +13,20 @@ public class ProcesarArchivoDeMapeos {
 
 	public static void main(String[] args) throws NumberFormatException, IOException, ClassNotFoundException, SQLException, JMSException 
 	{
-		new ProcesarArchivoDeMapeos().Luncher(new Configuracion().pathVolcado());
-	}
-	
-	public void Luncher(String path) throws ClassNotFoundException, SQLException, IOException
-	{
-		MapeoCSV mapeoCSV = new MapeoCSV(path);
+		String pathVolcado;
+		
+		if( args == null || args.length == 0)
+		{
+			pathVolcado = new Configuracion().landingzoneVolcado();
+		}
+		else
+		{
+			pathVolcado = args[0];
+		}
+		
+		MapeoCSV mapeoCSV = new MapeoCSV(pathVolcado);
 		MapeoDao mapeoDao = new MapeoDao();
 		mapeoDao.insertar(mapeoCSV.obtener());
+		System.out.println("Se insertó correctamente el archivo de mapeos");
 	}
 }

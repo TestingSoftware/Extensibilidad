@@ -13,8 +13,9 @@ public class Configuracion
 		URL_NIMBUS("nimbus.url"),
 		CONEXION_COLA("conexion.cola"),
 		EXISTENCIAS_COLA("existencias.cola"),
-		PATH_EXISTENCIAS("existencias.path"),
-		PATH_VOLCADO("volcado.path");
+		LANDINGZONE_EXISTENCIAS("existencias.landingzone"),
+		LANDINGZONE_VOLCADO("volcado.landingzone"),
+		CANTIDAD_RESPALDOS("cantidad.respaldos");
 		
 		private String nombre;
 		key(String nombre)
@@ -52,9 +53,9 @@ public class Configuracion
 		return prop.getProperty(key.URL_NIMBUS.toString());
 	}
 	
-	public String pathExistencias()
+	public String landingzoneExistencias()
 	{
-		return prop.getProperty(key.PATH_EXISTENCIAS.toString());
+		return prop.getProperty(key.LANDINGZONE_EXISTENCIAS.toString());
 	}
 	
 	public String conexionCola()
@@ -67,8 +68,13 @@ public class Configuracion
 		return prop.getProperty(key.EXISTENCIAS_COLA.toString());
 	}
 	
-	public String pathVolcado()
+	public String landingzoneVolcado()
 	{
-		return prop.getProperty(key.PATH_VOLCADO.toString());
+		return prop.getProperty(key.LANDINGZONE_VOLCADO.toString());
+	}
+	
+	public int cantidadRespaldos()
+	{
+		return Integer.parseInt(prop.getProperty(key.CANTIDAD_RESPALDOS.toString()));
 	}
 }

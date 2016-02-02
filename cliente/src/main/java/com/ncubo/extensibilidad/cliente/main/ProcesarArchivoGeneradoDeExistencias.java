@@ -18,14 +18,21 @@ public class ProcesarArchivoGeneradoDeExistencias {
 
 	public static void main(String[] args) throws NumberFormatException, IOException, ClassNotFoundException, SQLException, JMSException 
 	{
-		new ProcesarArchivoGeneradoDeExistencias().launcher(new Configuracion().pathExistencias()
-				, new Configuracion().colaExistencias());
-	}
-	
-	public void launcher(String pathArchivo, String cola) throws NumberFormatException, IOException, ClassNotFoundException, SQLException, JMSException
-	{
+		String landingzoneExistencias, cola;
+		
+		if( args == null || args.length == 0)
+		{
+			landingzoneExistencias = new Configuracion().landingzoneExistencias();
+			cola = new Configuracion().colaExistencias();
+		}
+		else
+		{
+			landingzoneExistencias = args[0];
+			cola = args[1];
+		}
+		
 		MapeoDao mapeoDao = new MapeoDao();
-		ProductoCSV productoCSV = new ProductoCSV(pathArchivo);
+		ProductoCSV productoCSV = new ProductoCSV(landingzoneExistencias);
 		
 		List<Producto> productos = productoCSV.obtener();
 		List<Mapeo> mapeados = mapeoDao.obtenerMapeosAmbosLados();
@@ -41,6 +48,7 @@ public class ProcesarArchivoGeneradoDeExistencias {
 				}
 			}
 		}
+		System.out.println("Se ha enviado a la cola "+ cola+ " las existencias de los productos que están mapeadas en ambos lados.");
 	}
 
 }

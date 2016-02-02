@@ -1,5 +1,7 @@
 package com.ncubo.extensibilidad.test.dao;
 
+import org.testng.annotations.Test;
+import org.testng.AssertJUnit;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -39,6 +41,6 @@ public class CsvMapeo
 		texto +=  elemento + " ";
 		
 		br.close();
-		Assert.assertEquals(outPutText, texto);
+		AssertJUnit.assertEquals(outPutText, texto);
 	}
 }
