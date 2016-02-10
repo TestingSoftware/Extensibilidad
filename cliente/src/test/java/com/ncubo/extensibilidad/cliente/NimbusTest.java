@@ -1,5 +1,7 @@
 package com.ncubo.extensibilidad.cliente;
 
+import org.testng.annotations.Test;
+import org.testng.AssertJUnit;
 import com.google.gson.Gson;
 import com.ncubo.extensibilidad.cliente.librerias.Nimbus;
 import com.ncubo.extensibilidad.cliente.librerias.Producto;
@@ -22,7 +24,7 @@ public class NimbusTest {
 		Nimbus nimbus = new Nimbus();
 		nimbus.crear(producto);
 		
-		Assert.assertEquals(producto, producto);
+		AssertJUnit.assertEquals(producto, producto);
 		
 	}
 	
@@ -38,6 +40,6 @@ public class NimbusTest {
 		Nimbus nimbus = new Nimbus();
 		nimbus.hayNuevo(producto);
 		
-		Assert.assertEquals(producto, producto);
+		AssertJUnit.assertEquals(producto, producto);
 	}
 }
