@@ -13,7 +13,7 @@ public class Launcher {
 	{
 		System.out.println( new Configuracion().urlNimbus() );
 		MapeoDao csvMapeo = new MapeoDao();
-		MapeoCSV crearCsv = new MapeoCSV();
+		MapeoCSV crearCsv = new MapeoCSV(new Configuracion().landingzoneVolcado());
 		crearCsv.crear(csvMapeo.obtener());
 	}
 	

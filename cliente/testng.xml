@@ -3,9 +3,11 @@
 <suite name="Suite" parallel="tests">
   <test name="Test">
     <classes>
+      <class name="com.ncubo.extensibilidad.cliente.launcher.GenerarArchivosMapeo"/>
       <class name="com.ncubo.extensibilidad.cliente.launcher.ProcesarArchivoGeneradoDeExistenciasTest"/>
       <class name="com.ncubo.extensibilidad.cliente.launcher.RespaldarArchivoDeMapeos"/>
       <class name="com.ncubo.extensibilidad.cliente.launcher.ProcesarArchivoDeMapeosTest"/>
+      <class name="com.ncubo.extensibilidad.cliente.launcher.ConsumirProductosNimbus"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
