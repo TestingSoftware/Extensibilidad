@@ -14,7 +14,7 @@ public class Configuracion
 		CONEXION_COLA("conexion.cola"),
 		EXISTENCIAS_COLA("existencias.cola"),
 		PATH_EXISTENCIAS("existencias.path"),
-		PATH_VOLCADO_DB("volcado.db");
+		PATH_VOLCADO_DB("volcado.path");
 		
 		private String nombre;
 		key(String nombre)

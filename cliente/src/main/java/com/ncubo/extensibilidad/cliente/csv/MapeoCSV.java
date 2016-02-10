@@ -47,7 +47,7 @@ public class MapeoCSV {
 		CSVPrinter csvPrinter = null;
 		
 		CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator("\n");
-		escritorArchivo = new FileWriter("src/main/resources/volcadoDB.csv");
+		escritorArchivo = new FileWriter(new Configuracion().pathVolcadoDb());
 		csvPrinter = new CSVPrinter(escritorArchivo, csvFileFormat);
 		csvPrinter.printRecord(CABECERAS);
 		
