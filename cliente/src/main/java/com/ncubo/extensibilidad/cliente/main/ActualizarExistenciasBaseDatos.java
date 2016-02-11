@@ -8,8 +8,8 @@ import java.util.List;
 import javax.jms.JMSException;
 
 import com.google.gson.Gson;
+import com.ncubo.extensibilidad.cliente.activemq.ConectorActiveMQ;
 import com.ncubo.extensibilidad.cliente.dao.MapeoDao;
-import com.ncubo.extensibilidad.cliente.librerias.Existencias;
 import com.ncubo.extensibilidad.cliente.librerias.IdNimbus;
 import com.ncubo.extensibilidad.cliente.librerias.Mapeo;
 
@@ -23,7 +23,6 @@ public class ActualizarExistenciasBaseDatos
 	{
 		if(!args.equals(null))
 		{
-			Existencias existencias = new Existencias();
 			MapeoDao mapeoDao = new MapeoDao();
 			List<Mapeo> existenciasPorInsertar = new ArrayList<Mapeo>();
 			existenciasPorInsertar = productosPorInsertar();
@@ -35,7 +34,8 @@ public class ActualizarExistenciasBaseDatos
 			// Se envian todos los productos actualizados en un solo string a Nimbus
 			Gson gson = new Gson();
 			String gsonObject = gson.toJson(existenciasPorInsertar);
-			existencias.actualizar(gsonObject);
+			ConectorActiveMQ connAMQ = new ConectorActiveMQ();
+			connAMQ.enviarMensaje("PRODUCTO", gsonObject);
 			//TODO se pueden enviar los productos uno por uno, CONSULTAR 
 		}
 		else
