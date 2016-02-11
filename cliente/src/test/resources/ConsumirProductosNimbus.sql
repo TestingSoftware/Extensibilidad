@@ -14,12 +14,13 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
+USE extensibilidad;
 --
 -- Dumping data for table `mapeo`
 --
 
 LOCK TABLES `mapeo` WRITE;
+DELETE FROM `mapeo`;
 /*!40000 ALTER TABLE `mapeo` DISABLE KEYS */;
 INSERT INTO `mapeo` (`id_erp`, `id_nimbus`, `descripcion_nimbus`, `descripcion_erp`) VALUES ('1','escoba','producto1','escoba'),('2','producto2','gaseosa','coca cola'),('3','producto3','galleta',NULL);
 /*!40000 ALTER TABLE `mapeo` ENABLE KEYS */;
