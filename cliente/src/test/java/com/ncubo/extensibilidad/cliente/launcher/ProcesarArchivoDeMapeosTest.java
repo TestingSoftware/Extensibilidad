@@ -6,7 +6,7 @@ import java.sql.Statement;
 
 import javax.jms.JMSException;
 
-import org.testng.AssertJUnit;
+import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -42,7 +42,7 @@ public class ProcesarArchivoDeMapeosTest extends Testcase {
 		
 		ProcesarArchivoDeMapeos.main(new String[]{RUTA_DEL_ARCHIO});
 		
-		AssertJUnit.assertEquals(mapeoCSV.obtener().toString(), mapeoDao.obtener().toString());
+		Assert.assertEquals(mapeoCSV.obtener().toString(), mapeoDao.obtener().toString());
 	}
 
 }
