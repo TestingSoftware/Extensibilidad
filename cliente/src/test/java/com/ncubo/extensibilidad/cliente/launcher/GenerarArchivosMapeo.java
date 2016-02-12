@@ -1,5 +1,7 @@
 package com.ncubo.extensibilidad.cliente.launcher;
 
+import org.testng.annotations.Test;
+import org.testng.AssertJUnit;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -31,10 +33,11 @@ public class GenerarArchivosMapeo extends Testcase
 	public void archivo() throws ClassNotFoundException, IOException, SQLException
 	{
 		final String PATH_VOLCADO = "src/test/resources/GenerarArchivosMapeo.csv";
-		GenerarMapeos.generar();
+		
+		GenerarMapeos.main(new String []{});
+		
 		File file = new File(PATH_VOLCADO);
-		Assert.assertTrue(file.exists());
-	
+		AssertJUnit.assertTrue(file.exists());
 	}
 	
 	@Test
@@ -44,7 +47,7 @@ public class GenerarArchivosMapeo extends Testcase
 		final String PATH_VOLCADO = "src/test/resources/GenerarArchivosMapeo.csv";
 		final File archivo = new File(PATH_VOLCADO);
 		
-		GenerarMapeos.generar();
+		GenerarMapeos.main(new String []{});
 
 		// Abre el archivo para leer su contenido y lo escribe en una variable
 		BufferedReader lector = new BufferedReader(new FileReader(archivo));
@@ -53,7 +56,7 @@ public class GenerarArchivosMapeo extends Testcase
 		lector.close();
 		textoDeArchivo = textoDeArchivo.replace(',', ' ');
 		
-		// Texto conocido: sé existe en la BD
+		// Texto conocido: sï¿½ existe en la BD
 		String [] arrayTextoEsperado = {
 				"ID_ERP","DESC_P_ERP","ID_NIMBUS","DESC_P_NIMBUS"
 				,"1", "escoba", "producto1", "escoba"};
@@ -62,7 +65,7 @@ public class GenerarArchivosMapeo extends Testcase
 		for(String caracter : arrayTextoEsperado)
 			textoEsperado += caracter + " ";
 		
-		Assert.assertEquals(textoDeArchivo, textoEsperado);
+		AssertJUnit.assertEquals(textoDeArchivo, textoEsperado);
 	}
 
 }

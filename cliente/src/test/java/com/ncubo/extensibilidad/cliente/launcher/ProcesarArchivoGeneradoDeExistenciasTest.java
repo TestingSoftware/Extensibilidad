@@ -1,6 +1,8 @@
 package com.ncubo.extensibilidad.cliente.launcher;
 
 
+import org.testng.annotations.Test;
+import org.testng.AssertJUnit;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -57,7 +59,7 @@ public class ProcesarArchivoGeneradoDeExistenciasTest extends Testcase{
 		ProcesarArchivoGeneradoDeExistencias.main(new String[]{RUTA_DEL_ARCHIVO, COLA});
 		
 		AssertJUnit.assertEquals( productoCSVpruebaLuncher.obtener().get(0).toString(), new ConectorActiveMQ().hayNuevo( COLA ));
-		AssertJUnit.assertEquals(new ConectorActiveMQ().hayNuevo( COLA ), "");//me aseguro que solo uno fue el que se ingresó a la cola
+		AssertJUnit.assertEquals(new ConectorActiveMQ().hayNuevo( COLA ), "");//me aseguro que solo uno fue el que se ingresï¿½ a la cola
 	}
 	
 }

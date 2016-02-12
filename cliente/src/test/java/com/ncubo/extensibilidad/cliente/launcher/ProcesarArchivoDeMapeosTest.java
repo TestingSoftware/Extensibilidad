@@ -1,5 +1,7 @@
 package com.ncubo.extensibilidad.cliente.launcher;
 
+import org.testng.annotations.Test;
+import org.testng.AssertJUnit;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -42,7 +44,7 @@ public class ProcesarArchivoDeMapeosTest extends Testcase {
 		
 		ProcesarArchivoDeMapeos.main(new String[]{RUTA_DEL_ARCHIO});
 		
-		Assert.assertEquals(mapeoCSV.obtener().toString(), mapeoDao.obtener().toString());
+		AssertJUnit.assertEquals(mapeoCSV.obtener().toString(), mapeoDao.obtener().toString());
 	}
 
 }

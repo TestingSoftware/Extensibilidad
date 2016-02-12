@@ -1,5 +1,7 @@
 package com.ncubo.extensibilidad.cliente;
 
+import org.testng.annotations.Test;
+import org.testng.AssertJUnit;
 import java.io.IOException;
 
 import org.testng.AssertJUnit;
@@ -21,7 +23,11 @@ public class NimbusTest {
 		Nimbus nimbus = new Nimbus();
 		nimbus.crear(producto);
 		
-		AssertJUnit.assertEquals(producto, producto);
+		
+		//TODO vistor tiene que arreglar el TC
+		/*Prodcuto pRest = nimbus.producto("1");
+		
+		AssertJUnit.assertEquals(pRest, producto);*/
 		
 	}
 	

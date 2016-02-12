@@ -1,5 +1,7 @@
 package com.ncubo.extensibilidad.cliente.launcher;
 
+import org.testng.annotations.Test;
+import org.testng.AssertJUnit;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -16,8 +18,8 @@ public class RespaldarArchivoDeMapeos {
 	MapeoCSV mapeoCSV = new MapeoCSV(folder);
 	
 	/*
-	 * En este método que aseguro que ingresa solo la cantidad de respaldos delimitado en 
-	 * properties y borra el más antiguo.
+	 * En este mï¿½todo que aseguro que ingresa solo la cantidad de respaldos delimitado en 
+	 * properties y borra el mï¿½s antiguo.
 	 */
 	@Test
 	public void respaldaDiezArchivos() throws IOException, ClassNotFoundException, SQLException, InterruptedException
@@ -52,7 +54,7 @@ public class RespaldarArchivoDeMapeos {
 	}
 
 	/*
-	 * Se prueba que el último registro que se inserta es el que se utiliza
+	 * Se prueba que el ï¿½ltimo registro que se inserta es el que se utiliza
 	 * */
 	@Test
 	public void obtieneElMasReciente() throws ClassNotFoundException, IOException, SQLException, InterruptedException

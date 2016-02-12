@@ -14,11 +14,6 @@ public class GenerarMapeos {
 
 	public static void main(String[] args) throws ClassNotFoundException, IOException, SQLException
 	{
-		generar();
-	}
-
-	public static void generar() throws IOException, SQLException, ClassNotFoundException 
-	{
 		final Logger logger = Logger.getLogger(GenerarMapeos.class);
 		MapeoDao csvMapeo = new MapeoDao();
 		MapeoCSV crearCsv = new MapeoCSV(new Configuracion().landingzoneVolcado());
@@ -31,5 +26,4 @@ public class GenerarMapeos {
 		else
 			throw new RuntimeException("No se pudo encontrar el archivo.");
 	}
-
 }

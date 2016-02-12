@@ -28,7 +28,7 @@ public class ProcesarArchivoGeneradoDeExistencias {
 		else
 		{
 			landingzoneExistencias = args[0];
-			cola = args[1];
+			cola = args[1];//TODO Dalaian cambiar esto
 		}
 		
 		MapeoDao mapeoDao = new MapeoDao();
@@ -48,7 +48,7 @@ public class ProcesarArchivoGeneradoDeExistencias {
 				}
 			}
 		}
-		System.out.println("Se ha enviado a la cola "+ cola+ " las existencias de los productos que están mapeadas en ambos lados.");
+		System.out.println("Se ha enviado a la cola "+ cola+ " las existencias de los productos que estï¿½n mapeadas en ambos lados.");
 	}
 
 }
