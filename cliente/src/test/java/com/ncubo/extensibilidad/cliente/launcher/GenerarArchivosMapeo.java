@@ -1,7 +1,5 @@
 package com.ncubo.extensibilidad.cliente.launcher;
 
-import org.testng.annotations.Test;
-import org.testng.AssertJUnit;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -9,13 +7,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.testng.AssertJUnit;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 import com.mysql.jdbc.Connection;
 import com.ncubo.extensibilidad.cliente.dao.Persistencia;
-import com.ncubo.extensibilidad.cliente.librerias.Configuracion;
 import com.ncubo.extensibilidad.cliente.main.GenerarMapeos;
 
 
@@ -56,7 +53,7 @@ public class GenerarArchivosMapeo extends Testcase
 		lector.close();
 		textoDeArchivo = textoDeArchivo.replace(',', ' ');
 		
-		// Texto conocido: s� existe en la BD
+		// Texto conocido: sé existe en la BD
 		String [] arrayTextoEsperado = {
 				"ID_ERP","DESC_P_ERP","ID_NIMBUS","DESC_P_NIMBUS"
 				,"1", "escoba", "producto1", "escoba"};
@@ -67,5 +64,4 @@ public class GenerarArchivosMapeo extends Testcase
 		
 		AssertJUnit.assertEquals(textoDeArchivo, textoEsperado);
 	}
-
 }

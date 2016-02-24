@@ -22,7 +22,7 @@ public class MapeoDao
 		descripcion_nimbus ();
 	}
 	
-	public void insertar(Mapeo mapeo) throws SQLException, ClassNotFoundException
+	public boolean insertar(Mapeo mapeo) throws SQLException, ClassNotFoundException
 	{
 		String query = String.format("INSERT INTO %s (%s, %s, %s, %s) "
 					 + "VALUES ('%s', '%s', '%s', '%s');"
@@ -39,8 +39,9 @@ public class MapeoDao
 		Persistencia dao = new Persistencia();
 		Connection con = dao.openConBD();
 		Statement ejecutor = con.createStatement();
-		ejecutor.execute(query);
+		boolean inserto = ejecutor.execute(query);
 		dao.closeConBD();
+		return !inserto;
 	}
 	
 	public List<Mapeo> obtenerMapeosAmbosLados() throws ClassNotFoundException, SQLException

@@ -16,34 +16,33 @@ import com.ncubo.extensibilidad.cliente.librerias.Nimbus;
 
 public class ActualizarExistenciasBaseDatos 
 {
-	private static int numProductosInsertar;
-	public int getNumProductosInsertar() {
-		return numProductosInsertar;
-	}
+
 	public static void main(String[] args) throws ClassNotFoundException, IOException, SQLException, JMSException 
 	{
+		boolean resultadoInsercion = false; //La idea es tener un parametro para saber si se inserto o no
 		if(args == null)
 		{
 			return; 
 		}
-		else if(args.length > 0)
-		{
-			System.out.println(String.format("No se envio el path de landingzone, se utilizará %s", new Configuracion().landingzoneVolcado()));
-		}
-		
+
 		MapeoDao mapeoDao = new MapeoDao();
 		List<Mapeo> existenciasPorInsertar = new ArrayList<Mapeo>();
 		existenciasPorInsertar = productosPorInsertar();
-		
 		for(Mapeo producto : existenciasPorInsertar)
 		{
-			mapeoDao.insertar(producto);
+			if(mapeoDao.insertar(producto))
+				resultadoInsercion = true; 
 		}
-		// Se envian todos los productos actualizados en un solo string a Nimbus
-		Gson gson = new Gson();
-		String gsonObject = gson.toJson(existenciasPorInsertar);
-		ConectorActiveMQ connAMQ = new ConectorActiveMQ();
-		connAMQ.enviarMensaje("PRODUCTO", gsonObject);
+		
+		if(resultadoInsercion)
+		{
+			Gson gson = new Gson();
+			String gsonObject = gson.toJson(existenciasPorInsertar);
+			ConectorActiveMQ connAMQ = new ConectorActiveMQ();
+			connAMQ.enviarMensaje("PRODUCTO", gsonObject);
+		}
+		else
+			System.out.println("No se actualizó ningún producto.");
 		//TODO se pueden enviar los productos uno por uno, CONSULTAR
 	}
 	private static List<Mapeo> productosPorInsertar() throws ClassNotFoundException, IOException, SQLException
