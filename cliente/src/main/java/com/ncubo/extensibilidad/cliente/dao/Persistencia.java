@@ -14,7 +14,9 @@ public class Persistencia
 	{
 		Class.forName("com.mysql.jdbc.Driver");
 		conector = (Connection) DriverManager.getConnection
-				("jdbc:mysql://localhost/extensibilidad", new Configuracion().mysqlUsuario(), new Configuracion().mysqlPassword());
+				(String.format("jdbc:mysql://%s/%s", 
+						new Configuracion().mysqlPath(),new Configuracion().mysqlBaseDeDatos()), 
+						new Configuracion().mysqlUsuario(), new Configuracion().mysqlPassword());
 		return conector;
 	}
 	
