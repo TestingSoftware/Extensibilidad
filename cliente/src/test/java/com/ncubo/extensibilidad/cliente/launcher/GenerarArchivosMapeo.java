@@ -1,21 +1,17 @@
 package com.ncubo.extensibilidad.cliente.launcher;
 
-import org.testng.annotations.Test;
-import org.testng.AssertJUnit;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import org.testng.Assert;
-import org.testng.annotations.Test;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 import com.mysql.jdbc.Connection;
 import com.ncubo.extensibilidad.cliente.dao.Persistencia;
-import com.ncubo.extensibilidad.cliente.librerias.Configuracion;
 import com.ncubo.extensibilidad.cliente.main.GenerarMapeos;
 
 
@@ -26,8 +22,8 @@ public class GenerarArchivosMapeo extends Testcase
 	{
 		Persistencia dao = new Persistencia();
 		Connection con = dao.openConBD();
-		Statement ejecutor = con.createStatement();
-		executeDBScripts("src/test/resources/ConsumirProductosNimbus.sql", ejecutor);
+		executeSchema(con);
+		executeDBScripts("src/test/resources/ConsumirProductosNimbus.sql", con);
 	}
 	@Test
 	public void archivo() throws ClassNotFoundException, IOException, SQLException
@@ -37,7 +33,7 @@ public class GenerarArchivosMapeo extends Testcase
 		GenerarMapeos.main(new String []{});
 		
 		File file = new File(PATH_VOLCADO);
-		AssertJUnit.assertTrue(file.exists());
+		Assert.assertTrue(file.exists());
 	}
 	
 	@Test
@@ -65,7 +61,7 @@ public class GenerarArchivosMapeo extends Testcase
 		for(String caracter : arrayTextoEsperado)
 			textoEsperado += caracter + " ";
 		
-		AssertJUnit.assertEquals(textoDeArchivo, textoEsperado);
+		Assert.assertEquals(textoDeArchivo, textoEsperado);
 	}
 
 }

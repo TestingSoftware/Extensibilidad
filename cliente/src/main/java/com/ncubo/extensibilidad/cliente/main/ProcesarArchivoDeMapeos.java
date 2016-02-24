@@ -27,6 +27,6 @@ public class ProcesarArchivoDeMapeos {
 		MapeoCSV mapeoCSV = new MapeoCSV(pathVolcado);
 		MapeoDao mapeoDao = new MapeoDao();
 		mapeoDao.insertar(mapeoCSV.obtener());
-		System.out.println("Se insertó correctamente el archivo de mapeos");
+		System.out.println("Se insertÃ³ correctamente el archivo de mapeos");
 	}
 }

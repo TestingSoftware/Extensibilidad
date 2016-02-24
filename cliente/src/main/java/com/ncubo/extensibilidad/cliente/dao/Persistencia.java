@@ -4,6 +4,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import com.mysql.jdbc.Connection;
+import com.ncubo.extensibilidad.cliente.librerias.Configuracion;
 
 public class Persistencia 
 {
@@ -13,7 +14,7 @@ public class Persistencia
 	{
 		Class.forName("com.mysql.jdbc.Driver");
 		conector = (Connection) DriverManager.getConnection
-				("jdbc:mysql://localhost/extensibilidad", "root", "");
+				("jdbc:mysql://localhost/extensibilidad", new Configuracion().mysqlUsuario(), new Configuracion().mysqlPassword());
 		return conector;
 	}
 	

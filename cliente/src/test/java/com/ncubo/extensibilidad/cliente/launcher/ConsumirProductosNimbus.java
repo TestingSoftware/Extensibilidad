@@ -1,12 +1,10 @@
 package com.ncubo.extensibilidad.cliente.launcher;
-import org.testng.annotations.Test;
-import org.testng.AssertJUnit;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.jms.JMSException;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -21,8 +19,8 @@ public class ConsumirProductosNimbus extends Testcase
 	{
 		Persistencia dao = new Persistencia();
 		Connection con = dao.openConBD();
-		Statement ejecutor = con.createStatement();
-		executeDBScripts("src/test/resources/ConsumirProductosNimbus.sql", ejecutor);
+		executeSchema(con);
+		executeDBScripts("src/test/resources/ConsumirProductosNimbus.sql", con);
 	}
 	 @Test
 	 public void consumir() throws ClassNotFoundException, IOException, SQLException, JMSException
@@ -30,6 +28,6 @@ public class ConsumirProductosNimbus extends Testcase
 		String [] test = {"1"};
 		ActualizarExistenciasBaseDatos.main(test);
 		ActualizarExistenciasBaseDatos actualizar = new ActualizarExistenciasBaseDatos();
-		AssertJUnit.assertEquals(9,actualizar.getNumProductosInsertar());
+		Assert.assertEquals(9,actualizar.getNumProductosInsertar());
 	 }
 }

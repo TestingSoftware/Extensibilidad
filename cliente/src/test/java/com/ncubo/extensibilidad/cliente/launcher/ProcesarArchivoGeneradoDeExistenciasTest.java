@@ -1,15 +1,12 @@
 package com.ncubo.extensibilidad.cliente.launcher;
 
 
-import org.testng.annotations.Test;
-import org.testng.AssertJUnit;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.jms.JMSException;
 
-import org.testng.AssertJUnit;
+import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -26,8 +23,8 @@ public class ProcesarArchivoGeneradoDeExistenciasTest extends Testcase{
 	{
 		Persistencia dao = new Persistencia();
 		Connection con = dao.openConBD();
-		Statement ejecutor = con.createStatement();
-		executeDBScripts("src/test/resources/ProcesarArchivoDeMapeosTest.sql", ejecutor);
+		executeSchema(con);
+		executeDBScripts("src/test/resources/extensibilidad_mapeo.sql", con);
 	}
 	
 	/*
@@ -42,7 +39,7 @@ public class ProcesarArchivoGeneradoDeExistenciasTest extends Testcase{
 			new ProductoCSV("src/test/resources/archivoInexistente.csv").obtener();
 		}catch(Exception ex)
 		{
-			AssertJUnit.assertEquals(ex.getMessage(), "El archivo no existe.");
+			Assert.assertEquals(ex.getMessage(), "El archivo no existe.");
 		}
 	}
 	
@@ -50,7 +47,7 @@ public class ProcesarArchivoGeneradoDeExistenciasTest extends Testcase{
 	 * Solo se espera que se inserte el primer registro del archivo en la cola ya que solo este es el mapeado en la base
 	 */
 	@Test
-	public void luncher() throws NumberFormatException, ClassNotFoundException, IOException, SQLException, JMSException
+	public void launcher() throws NumberFormatException, ClassNotFoundException, IOException, SQLException, JMSException
 	{
 		final String COLA = "TEST";
 		final String RUTA_DEL_ARCHIVO = "src/test/resources/productosExistenciasTestLuncher.csv";
@@ -58,8 +55,8 @@ public class ProcesarArchivoGeneradoDeExistenciasTest extends Testcase{
 		ProductoCSV productoCSVpruebaLuncher = new ProductoCSV(RUTA_DEL_ARCHIVO);
 		ProcesarArchivoGeneradoDeExistencias.main(new String[]{RUTA_DEL_ARCHIVO, COLA});
 		
-		AssertJUnit.assertEquals( productoCSVpruebaLuncher.obtener().get(0).toString(), new ConectorActiveMQ().hayNuevo( COLA ));
-		AssertJUnit.assertEquals(new ConectorActiveMQ().hayNuevo( COLA ), "");//me aseguro que solo uno fue el que se ingres� a la cola
+		Assert.assertEquals( productoCSVpruebaLuncher.obtener().get(0).toString(), new ConectorActiveMQ().hayNuevo( COLA ));
+		Assert.assertEquals(new ConectorActiveMQ().hayNuevo( COLA ), "");//me aseguro que solo uno fue el que se ingresó a la cola
 	}
 	
 }

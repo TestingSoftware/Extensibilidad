@@ -15,7 +15,9 @@ public class Configuracion
 		EXISTENCIAS_COLA("existencias.cola"),
 		LANDINGZONE_EXISTENCIAS("existencias.landingzone"),
 		LANDINGZONE_VOLCADO("volcado.landingzone"),
-		CANTIDAD_RESPALDOS("cantidad.respaldos");
+		CANTIDAD_RESPALDOS("cantidad.respaldos"),
+		MYSQL_USUARIO("mysql.usuario"),
+		MYSQL_PASSWORD("mysql.password");
 		
 		private String nombre;
 		key(String nombre)
@@ -76,5 +78,15 @@ public class Configuracion
 	public int cantidadRespaldos()
 	{
 		return Integer.parseInt(prop.getProperty(key.CANTIDAD_RESPALDOS.toString()));
+	}
+	
+	public String mysqlUsuario()
+	{
+		return prop.getProperty(key.MYSQL_USUARIO.toString());
+	}
+	
+	public String mysqlPassword()
+	{
+		return prop.getProperty(key.MYSQL_PASSWORD.toString());
 	}
 }
