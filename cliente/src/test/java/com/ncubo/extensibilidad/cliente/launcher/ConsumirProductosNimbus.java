@@ -19,7 +19,7 @@ public class ConsumirProductosNimbus extends Testcase
 	{
 		Persistencia dao = new Persistencia();
 		Connection con = dao.openConBD();
-		executeSchema(con);
+		executeSchema(dao.openConBD(true));
 		executeDBScripts("src/test/resources/ConsumirProductosNimbus.sql", con);
 	}
 	 @Test

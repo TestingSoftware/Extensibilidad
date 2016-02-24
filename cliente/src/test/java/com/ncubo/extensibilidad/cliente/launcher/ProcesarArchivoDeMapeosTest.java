@@ -23,7 +23,7 @@ public class ProcesarArchivoDeMapeosTest extends Testcase {
 	{
 		Persistencia dao = new Persistencia();
 		Connection con = dao.openConBD();
-		executeSchema(con);
+		executeSchema(dao.openConBD(true));
 		executeDBScripts("src/test/resources/ProcesarArchivoDeMapeosTest.sql", con);
 		con.close();
 	}

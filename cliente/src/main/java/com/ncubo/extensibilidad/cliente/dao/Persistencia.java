@@ -12,13 +12,20 @@ public class Persistencia
 	
 	public Connection openConBD() throws SQLException, ClassNotFoundException
 	{
+		return openConBD(false);
+	}
+	
+	public Connection openConBD(boolean nuevaConexion) throws SQLException, ClassNotFoundException
+	{
 		Class.forName("com.mysql.jdbc.Driver");
 		conector = (Connection) DriverManager.getConnection
 				(String.format("jdbc:mysql://%s/%s", 
-						new Configuracion().mysqlPath(),new Configuracion().mysqlBaseDeDatos()), 
+						new Configuracion().mysqlPath(), nuevaConexion ? "" : new Configuracion().mysqlBaseDeDatos()), 
 						new Configuracion().mysqlUsuario(), new Configuracion().mysqlPassword());
 		return conector;
 	}
+	
+	
 	
 	public void closeConBD() throws SQLException
 	{

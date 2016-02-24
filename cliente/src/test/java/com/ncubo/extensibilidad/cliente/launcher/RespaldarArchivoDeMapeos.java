@@ -23,7 +23,7 @@ public class RespaldarArchivoDeMapeos extends Testcase{
 	{
 		Persistencia dao = new Persistencia();
 		Connection con = dao.openConBD();
-		executeSchema(con);
+		executeSchema(dao.openConBD(true));
 		executeDBScripts("src/test/resources/extensibilidad_mapeo.sql", con);
 	}
 	
