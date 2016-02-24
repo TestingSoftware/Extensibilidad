@@ -1,10 +1,7 @@
 package com.ncubo.extensibilidad.cliente.launcher;
 
-import org.testng.annotations.Test;
-import org.testng.AssertJUnit;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.jms.JMSException;
 
@@ -25,18 +22,18 @@ public class ProcesarArchivoDeMapeosTest extends Testcase {
 	public void cargarDatos() throws ClassNotFoundException, SQLException, IOException
 	{
 		Persistencia dao = new Persistencia();
+		executeSchema(dao.openConBD(true));
 		Connection con = dao.openConBD();
-		Statement ejecutor = con.createStatement();
-		executeDBScripts("src/test/resources/ProcesarArchivoDeMapeosTest.sql", ejecutor);
+		executeDBScripts("src/test/resources/ProcesarArchivoDeMapeosTest.sql", con);
+		con.close();
 	}
-	
 	
 	/*
 	 * Se prueba que el contenido del archivo csv es el mismo que se inserta en la base de datos y de la 
 	 * forma correcta
 	 */
 	@Test
-	public void pruebLauncher() throws ClassNotFoundException, SQLException, IOException, NumberFormatException, JMSException
+	public void pruebaLauncher() throws ClassNotFoundException, SQLException, IOException, NumberFormatException, JMSException
 	{
 		final String RUTA_DEL_ARCHIO= "src/test/resources/ProcesarArchivoDeMapeosTest.csv";
 		MapeoCSV mapeoCSV = new MapeoCSV(RUTA_DEL_ARCHIO);
@@ -44,7 +41,7 @@ public class ProcesarArchivoDeMapeosTest extends Testcase {
 		
 		ProcesarArchivoDeMapeos.main(new String[]{RUTA_DEL_ARCHIO});
 		
-		AssertJUnit.assertEquals(mapeoCSV.obtener().toString(), mapeoDao.obtener().toString());
+		Assert.assertEquals(mapeoCSV.obtener().toString(), mapeoDao.obtener().toString());
 	}
 
 }

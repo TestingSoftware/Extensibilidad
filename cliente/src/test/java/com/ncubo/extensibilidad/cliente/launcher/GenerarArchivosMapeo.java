@@ -5,9 +5,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Statement;
 
+<<<<<<< HEAD
 import org.testng.AssertJUnit;
+=======
+import org.testng.Assert;
+>>>>>>> 91fe0714c16e7aabe9ff04bf7f3fc3a692d6e0b7
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -22,9 +25,9 @@ public class GenerarArchivosMapeo extends Testcase
 	public void cargarDatos() throws ClassNotFoundException, SQLException, IOException
 	{
 		Persistencia dao = new Persistencia();
+		executeSchema(dao.openConBD(true));
 		Connection con = dao.openConBD();
-		Statement ejecutor = con.createStatement();
-		executeDBScripts("src/test/resources/ConsumirProductosNimbus.sql", ejecutor);
+		executeDBScripts("src/test/resources/ConsumirProductosNimbus.sql", con);
 	}
 	@Test
 	public void archivo() throws ClassNotFoundException, IOException, SQLException
@@ -34,7 +37,7 @@ public class GenerarArchivosMapeo extends Testcase
 		GenerarMapeos.main(new String []{});
 		
 		File file = new File(PATH_VOLCADO);
-		AssertJUnit.assertTrue(file.exists());
+		Assert.assertTrue(file.exists());
 	}
 	
 	@Test
@@ -62,6 +65,6 @@ public class GenerarArchivosMapeo extends Testcase
 		for(String caracter : arrayTextoEsperado)
 			textoEsperado += caracter + " ";
 		
-		AssertJUnit.assertEquals(textoDeArchivo, textoEsperado);
+		Assert.assertEquals(textoDeArchivo, textoEsperado);
 	}
 }

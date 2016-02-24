@@ -20,15 +20,21 @@ public class ProcesarArchivoGeneradoDeExistencias {
 	{
 		String landingzoneExistencias, cola;
 		
-		if( args == null || args.length == 0)
+		if( args == null )
 		{
+			return;
+		}
+		else if(args.length == 0)
+		{
+			System.out.println(String.format("Se utilizará %s como landingzone ", new Configuracion().landingzoneVolcado()));
+			
 			landingzoneExistencias = new Configuracion().landingzoneExistencias();
 			cola = new Configuracion().colaExistencias();
 		}
 		else
 		{
 			landingzoneExistencias = args[0];
-			cola = args[1];//TODO Dalaian cambiar esto
+			cola = args[1];
 		}
 		
 		MapeoDao mapeoDao = new MapeoDao();
