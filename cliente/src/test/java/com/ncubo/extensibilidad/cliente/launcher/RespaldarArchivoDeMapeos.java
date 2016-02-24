@@ -22,8 +22,8 @@ public class RespaldarArchivoDeMapeos extends Testcase{
 	public void cargarDatos() throws ClassNotFoundException, SQLException, IOException
 	{
 		Persistencia dao = new Persistencia();
-		Connection con = dao.openConBD();
 		executeSchema(dao.openConBD(true));
+		Connection con = dao.openConBD();
 		executeDBScripts("src/test/resources/extensibilidad_mapeo.sql", con);
 	}
 	
