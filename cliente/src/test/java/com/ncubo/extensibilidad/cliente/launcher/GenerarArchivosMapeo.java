@@ -6,11 +6,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
 
-<<<<<<< HEAD
-import org.testng.AssertJUnit;
-=======
+
 import org.testng.Assert;
->>>>>>> 91fe0714c16e7aabe9ff04bf7f3fc3a692d6e0b7
+
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 

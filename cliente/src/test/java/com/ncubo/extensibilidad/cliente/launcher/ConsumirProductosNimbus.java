@@ -1,8 +1,6 @@
 package com.ncubo.extensibilidad.cliente.launcher;
-<<<<<<< HEAD
+
 import java.io.BufferedReader;
-=======
->>>>>>> 91fe0714c16e7aabe9ff04bf7f3fc3a692d6e0b7
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -10,12 +8,8 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.sql.SQLException;
-<<<<<<< HEAD
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-=======
->>>>>>> 91fe0714c16e7aabe9ff04bf7f3fc3a692d6e0b7
 
 import javax.jms.JMSException;
 
@@ -49,7 +43,7 @@ public class ConsumirProductosNimbus extends Testcase
 		String [] test = {"1"};
 		List<Mapeo> listaBD = new ArrayList<Mapeo>();
 		ActualizarExistenciasBaseDatos.main(test);
-<<<<<<< HEAD
+
 		
 		MapeoDao mapeoDao = new MapeoDao();
 		listaBD = mapeoDao.obtener();
@@ -59,10 +53,7 @@ public class ConsumirProductosNimbus extends Testcase
 		for(Mapeo elemento : idsDeRest)
 			Assert.assertTrue(listTemp1.remove(elemento.getIdNimbus()));
 		
-=======
-		ActualizarExistenciasBaseDatos actualizar = new ActualizarExistenciasBaseDatos();
-		Assert.assertEquals(9,actualizar.getNumProductosInsertar());
->>>>>>> 91fe0714c16e7aabe9ff04bf7f3fc3a692d6e0b7
+
 	 }
 	private List<Mapeo> retornaIdsNimbusRest(List<Mapeo> listaBD, List<String> listTemp1)
 			throws MalformedURLException, IOException, ProtocolException 
